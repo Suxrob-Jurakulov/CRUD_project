@@ -1,0 +1,19 @@
+POST localhost:8080/auth/public/register
+Content-Type: application/json
+
+{
+  "name": "Vali",
+  "username": "vali",
+  "password": "123"
+}
+
+###
+
+POST localhost:8080/auth/public/login
+Content-Type: application/json
+
+{
+  "username": "vali",
+  "password": "123"
+}
+###
