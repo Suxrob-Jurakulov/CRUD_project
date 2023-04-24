@@ -2,7 +2,6 @@ package com.company.service;
 
 import com.company.dto.UserDTO;
 import com.company.entity.UserEntity;
-import com.company.enums.Role;
 import com.company.exp.BadRequestException;
 import com.company.exp.ItemNotFoundException;
 import com.company.repository.UserRepository;
@@ -38,15 +37,15 @@ public class UserService {
         return "Successfully updated";
     }
 
-    public UserDTO get(Integer id){
+    public UserDTO get(Integer id) {
         Optional<UserEntity> optional = userRepository.findById(id);
-        if (optional.isEmpty()){
+        if (optional.isEmpty()) {
             throw new ItemNotFoundException("User not found");
         }
         return getDto(optional.get());
     }
 
-    public List<UserDTO> dtoList(){
+    public List<UserDTO> dtoList() {
         List<UserEntity> allEntities = userRepository.findAll();
         List<UserDTO> dtos = new ArrayList<>();
         for (UserEntity allEntity : allEntities) {
@@ -59,23 +58,25 @@ public class UserService {
         userRepository.deleteByUsername(getCurrentUser().getUsername());
         return "Your account was deleted";
     }
-    public String deleteByAdmin(Integer id){
+
+    public String deleteByAdmin(Integer id) {
         Optional<UserEntity> byId = userRepository.findById(id);
-        if (byId.isEmpty()){
+        if (byId.isEmpty()) {
             throw new ItemNotFoundException("User not found");
         }
         userRepository.deleteById(id);
         return "Successfully deleted";
     }
 
-    public UserEntity getCurrentUser(){
+    public UserEntity getCurrentUser() {
         String username = CurrentUserUtil.currentUser().getUsername();
         Optional<UserEntity> optional = userRepository.findByUsername(username);
-        if (optional.isEmpty()){
+        if (optional.isEmpty()) {
             throw new ItemNotFoundException("User not found");
         }
-         return optional.get();
+        return optional.get();
     }
+
     private UserDTO getDto(UserEntity entity) {
         return UserDTO.builder()
                 .id(entity.getId())
